@@ -2,3 +2,8 @@
     max-height: 250px;
     overflow: scroll;
 }
+
+/* added v-cloak to load pretty */
+[v-cloak] {
+    display: none;
+}

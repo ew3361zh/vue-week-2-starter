@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <div id="app">
+    <div id="app" v-cloak>
 
         <!-- display the name of the activity -->
         <h1 class="text-center"> {{ activity }} Time Tracker</h1>
@@ -116,11 +116,12 @@
 
             <div class="card-body">
 
+                
                 <!-- Tadd computed property to calculate the total hours -->
-                <p>You have practiced a total of {{ totalHours }}<!-- display total hours --></p>
-
+                <p> You have practiced Scales {{ totalHours[0] }} hours</p>
                 <!-- Challenge question! Display a list of the total hours for each type.  -->
-          
+                <p>You have practiced Fingering {{ totalHours[1] }} hours</p>
+                <p>You have practiced Bowing {{ totalHours[2] }} hours</p>
             </div>
         </div>
 
@@ -137,7 +138,7 @@
                 activity: 'Practice Cello',
                 // array of the activity records
                 activityRecords: [],
-                //date of practice - to be v0modeled
+                //date of practice - to be v-modeled
                 dateString: '',
                 hours: 1,
                 type: 'Scales',
@@ -211,22 +212,59 @@
                 }
             },
             totalHours() {
-                //initialize total variable
-                let total = 0
-                //get the total hours for each record
-                this.activityRecords.forEach( function(record) {
-                    total = total + record.hours
-                })
+                //initialize total variables for each type
+                let totalScales = 0
+                let totalFingering = 0
+                let totalBowing = 0
 
-                // to display grammatically correct '1 hour' and 'any other value hours'
-                if (total === 1) {
-                    return '1 hour'
-                } else {
-                    return total + ' hours'
-                }
+                //get the total hours for each record for each type
+                
+                this.activityRecords.forEach( function(record) {
+                    if (record.type == 'Scales') {
+                        totalScales = totalScales + record.hours
+                    } 
+                    else if (record.type == 'Fingering') {
+                        totalFingering = totalFingering + record.hours
+                    }
+                    else {
+                        totalBowing = totalBowing + record.hours
+                    }
+                })
+                
+                
+                return [totalScales, totalFingering, totalBowing]
+                //specific readouts
+                // if (totalScales === 1) {
+                //     return `You have practiced Scales a total of 1 hour`
+                // } else {
+                //     return `You have practiced Scales a total of ${totalScales} hours`
+                // }
+
+                // if (totalFingering === 1) {
+                //     return '1 hour'
+                // } else {
+                //     return totalFingering + ' hours'
+                // }
+                // if (totalBowing === 1) {
+                //     return '1 hour'
+                // } else {
+                //     return totalBowing + ' hours'
+                // }
+            }
+                
 
                 
-            }
+                
+                
+
+            
+                
+
+                 
+                
+                
+
+            
         }
     })
 
